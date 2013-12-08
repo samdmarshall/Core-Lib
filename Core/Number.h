@@ -19,7 +19,6 @@
 
 #define MakeNSIntegerUnsigned(a) a = (a < 0 ? 0 : a)
 
-
 #pragma mark -
 #pragma mark Float
 

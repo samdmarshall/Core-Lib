@@ -10,17 +10,16 @@
 #define Core_Range_h
 
 #include <stdint.h>
-#include <stdbool.h>
 
-struct Range {
+struct InternalRange {
 	uint64_t offset;
 	uint64_t length;
 } ATR_PACK;
 
-typedef Range CoreRange;
+typedef struct InternalRange Range;
 
-#define CoreRangeCreate(offset, length) (CoreRange){offset, length}
-#define CoreRangeContainsValue(range, value) (value >= range.offset && value < (range.offet + range.length))
+#define RangeCreate(offset, length) (Range){offset, length}
+#define RangeContainsValue(range, value) (value >= range.offset && value < (range.offet + range.length))
 
 
 #endif
