@@ -11,6 +11,7 @@
 
 #include "Number.h"
 #include "GeometryMaths.h"
+#include <stdbool.h>
 
 enum VectorAxis {
 	VectorAxisZero = 0x0,
