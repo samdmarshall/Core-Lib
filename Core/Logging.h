@@ -28,7 +28,7 @@
 #pragma mark -
 #pragma mark Logging
 
-#ifndef DEBUG
+#ifdef DEBUG
 	#define DEBUG_LOGGER true
 	#define RELEASE_LOGGER false
 #else
@@ -45,23 +45,23 @@ enum LoggerPrintCodes {
 	PrintCode_Count
 };
 
-static char* PrintColourCode[PrintCode_Count] = {
+ATR_UNUSED static char* PrintColourCode[PrintCode_Count] = {
 	COLOR_NRM,
 	COLOR_GRN,
 	COLOR_YEL,
 	COLOR_RED,
 	COLOR_BLU
-}
+};
 
-static char* PrintCodeString[PrintCode_Count] = {
+ATR_UNUSED static char* PrintCodeString[PrintCode_Count] = {
 	"",
 	"OK!",
 	"TRY",
 	"ERR",
 	"NTR",
-	"???"
-}
+};
 
+#define LoggerPrintCodeColorDirect(code) (LoggerUseColorCodes ? code : "")
 #define LoggerPrintCodeColor(code) (LoggerUseColorCodes ? PrintColourCode[code] : "")
 #define LoggerPrintCode(code) (PrintCodeString[code])
 
@@ -79,12 +79,51 @@ static char* PrintCodeString[PrintCode_Count] = {
 		printf(__VA_ARGS__); \
 		printf("\n"); \
 	}
-	
+
+
+#define DLine(code,...) \
+	if (DEBUG_LOGGER) { \
+		printf("%s",LoggerPrintCodeColor(code)); \
+		printf(__VA_ARGS__); \
+		printf("\n"); \
+	}
+
+#define RLine(code,...) \
+	if (RELEASE_LOGGER) { \
+		printf("%s",LoggerPrintCodeColor(code)); \
+		printf(__VA_ARGS__); \
+		printf("\n"); \
+	}
+
+#define DArg(code,...) \
+	if (DEBUG_LOGGER) { \
+		printf("%s",LoggerPrintCodeColorDirect(code)); \
+		printf(__VA_ARGS__); \
+	}
+
+#define RArg(code,...) \
+	if (RELEASE_LOGGER) { \
+		printf("%s",LoggerPrintCodeColorDirect(code)); \
+		printf(__VA_ARGS__); \
+	}
+
+
+
 #ifdef DEBUG
 #define LogPrint(code,...) DPrint(code,__VA_ARGS__)
+#define LogLine(code,...) DLine(code,__VA_ARGS__)
+#define LogArg(code,...) DArg(code,__VA_ARGS__)
 #else
 #define LogPrint(code,...) RPrint(code,__VA_ARGS__)
+#define LogLine(code,...) RLine(code,__VA_ARGS__)
+#define LogArg(code,...) RArg(code,__VA_ARGS__)
 #endif
+
+#define PrintDepth(depth,...) \
+	for (unsigned int i = 0x0; i < depth; i++) { \
+		printf("\t"); \
+	} \
+	printf(__VA_ARGS__);
 
 
 #endif
