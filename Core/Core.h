@@ -10,17 +10,12 @@
 #define Core_Core_h
 
 #pragma mark -
-#pragma mark Attributes
-#define ATR_PACK __attribute__ ((packed))
-#define ATR_FUNC(name) __attribute__ ((ifunc(name)))
-#define ATR_UNUSED __attribute__ ((unused))
-
-#pragma mark -
 #pragma mark Standard
 #include "Pointer.h"
 #include "Range.h"
 #include "Number.h"
 #include "Logging.h"
+#include "Attributes.h"
 
 #pragma mark -
 #pragma mark Geometry
