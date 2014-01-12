@@ -12,7 +12,7 @@
 #include "Vector.h"
 #include <stdlib.h>
 
-static Vector VectorDefinedVectors[VectorAxisCount] = {
+static struct Vector VectorDefinedVectors[VectorAxisCount] = {
 	{0.f,0.f,0.f},
 	{1.f,0.f,0.f},
 	{0.f,1.f,0.f},

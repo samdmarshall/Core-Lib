@@ -10,6 +10,7 @@
 #define Core_Logging_h
 
 #include <stdio.h>
+#include "Core.h"
 
 #pragma mark -
 #pragma mark Color Codes

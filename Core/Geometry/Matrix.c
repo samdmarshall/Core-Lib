@@ -34,7 +34,7 @@ MatrixPtr MatrixCreateFromAxisRadians(VectorPtr axis, CGFloat angle) {
 	return matrix;
 }
 
-MatrixPtr MatrixCreateFromAxisRadiansTranslation(VectorPtr axis, float angle, VectorPtr translate) {
+MatrixPtr MatrixCreateFromAxisRadiansTranslation(VectorPtr axis, CGFloat angle, VectorPtr translate) {
 	VectorPtr axisVector = VectorNormalize(axis);
 	CGFloat s = CGFloatSin(angle);
 	CGFloat c = CGFloatCos(angle);
@@ -78,9 +78,9 @@ VectorPtr MatrixTransformPoint(MatrixPtr matrix, VectorPtr point) {
 }
 
 VectorPtr MatrixTransformDirection(MatrixPtr matrix, VectorPtr dir) {
-	VectorPtr xBasis = VectorMultiplyVector(matrix->xBasis, point->x);
-	VectorPtr yBasis = VectorMultiplyVector(matrix->yBasis, point->y);
-	VectorPtr zBasis = VectorMultiplyVector(matrix->zBasis, point->z);
+	VectorPtr xBasis = VectorMultiplyVector(matrix->xBasis, dir->x);
+	VectorPtr yBasis = VectorMultiplyVector(matrix->yBasis, dir->y);
+	VectorPtr zBasis = VectorMultiplyVector(matrix->zBasis, dir->z);
 	
 	VectorPtr xy = VectorAddVector(xBasis, yBasis);
 	VectorRelease(xBasis);
@@ -123,7 +123,7 @@ MatrixPtr MatrixRigidInverse(MatrixPtr matrix) {
 	VectorPtr xBasis = VectorCreateFromComponents(matrix->xBasis->x,matrix->yBasis->x,matrix->zBasis->x);
 	VectorPtr yBasis = VectorCreateFromComponents(matrix->xBasis->y,matrix->yBasis->y,matrix->zBasis->y);
 	VectorPtr zBasis = VectorCreateFromComponents(matrix->xBasis->z,matrix->yBasis->z,matrix->zBasis->z);
-	VectorPtr origin = MatrixTransformDirection(matrix, -matrix->origin);
+	VectorPtr origin = MatrixTransformDirection(matrix, matrix->origin);
 	MatrixPtr inverseMatrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
 	VectorRelease(xBasis);
 	VectorRelease(yBasis);
