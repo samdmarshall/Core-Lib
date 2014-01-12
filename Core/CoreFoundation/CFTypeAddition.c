@@ -13,15 +13,16 @@
 #include "CFDictionaryAddition.h"
 #include "Number.h"
 #include <objc/NSObjCRuntime.h>
+#include "Logging.h"
 
 extern void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t depth);
 
 void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 	CFStringRef valueType = CFCopyTypeIDDescription(CFGetTypeID(value));
 	if (CFStringCompare(valueType, CFCopyTypeIDDescription(CFDictionaryGetTypeID()), 0x0) == kCFCompareEqualTo) {
-		printf("\n");
+		printf("{\n");
 		PrintCFDictionaryInternalFormatting(value, depth+0x1);
-		printf("\n");
+		PrintDepth(depth,"}\n");
 	} else
 	if (CFStringCompare(valueType, CFCopyTypeIDDescription(CFBooleanGetTypeID()), 0x0) == kCFCompareEqualTo) {
 		printf("%s\n",(CFBooleanGetValue(value) ? "True" : "False"));
@@ -132,6 +133,16 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 				break;
 			};
 		}
+	} else
+	if (CFStringCompare(valueType, CFCopyTypeIDDescription(CFArrayGetTypeID()), 0x0) == kCFCompareEqualTo) {
+		CFIndex count = CFArrayGetCount(value);
+		printf("[\n");
+		for (CFIndex i = 0x0; i < count; i++) {
+			CFTypeRef item = CFArrayGetValueAtIndex(value, i);
+			PrintDepth(depth+0x1,"");
+			PrintCFTypeInternalFormat(item, depth+0x1);
+		}
+		PrintDepth(depth,"]\n");
 	} else {
 		CFStringRef description = CFCopyDescription(value);
 		printf("%s\n",(char*)CFStringGetCStringPtr(description,kCFStringEncodingUTF8));
