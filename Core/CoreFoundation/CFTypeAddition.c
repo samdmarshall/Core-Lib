@@ -48,13 +48,13 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 			case kCFNumberSInt32Type: {
 				SInt32 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%dz\n",number);
+				printf("%d\n",(int32_t)number);
 				break;
 			};
 			case kCFNumberSInt64Type: {
 				SInt64 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%lldz\n",number);
+				printf("%lld\n",number);
 				break;
 			};
 			case kCFNumberFloat32Type: {
@@ -84,19 +84,19 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 			case kCFNumberIntType: {
 				int number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%dz\n",number);
+				printf("%d\n",number);
 				break;
 			};
 			case kCFNumberLongType: {
 				long number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%ldz\n",number);
+				printf("%ld\n",number);
 				break;
 			};
 			case kCFNumberLongLongType: {
 				long long number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%qdz\n",number);
+				printf("%qd\n",number);
 				break;
 			};
 			case kCFNumberFloatType: {
@@ -114,13 +114,13 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 			case kCFNumberCFIndexType: {
 				CFIndex number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%ldz\n",number);
+				printf("%ld\n",number);
 				break;
 			};
 			case kCFNumberNSIntegerType: {
 				NSInteger number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%ldz\n",number);
+				printf("%ld\n",(long)number);
 				break;
 			};
 			case kCFNumberCGFloatType: {
