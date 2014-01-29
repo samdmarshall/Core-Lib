@@ -16,4 +16,12 @@
 #define ATR_FUNC(name) __attribute__ ((ifunc(name)))
 #define ATR_UNUSED __attribute__ ((unused))
 
+#ifndef __clang__ 
+#define __has_feature(x) /* empty */
+#endif
+
+#if !__has_feature(objc_arc) 
+#define __unsafe_unretained /* empty */
+#endif
+
 #endif
