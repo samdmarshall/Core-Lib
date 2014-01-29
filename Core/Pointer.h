@@ -27,4 +27,14 @@ typedef uintptr_t* (*FunctionPointer)();
 #define PtrAdd(ptr, add) (Ptr(ptr) + (uint64_t)add)
 #define PtrSub(ptr, sub) (Ptr(ptr) - (uint64_t)sub)
 
+#define SafeCode(var, block) \
+if (var != 0x0) { \
+	block \
+}
+
+#define Safe(call,var) \
+if (var != 0x0) { \
+	call(var); \
+}
+
 #endif

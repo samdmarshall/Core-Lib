@@ -13,4 +13,6 @@
 
 void PrintCFType(CFTypeRef value);
 
+void CFSafeRelease(CFTypeRef CF_RELEASES_ARGUMENT var);
+
 #endif
