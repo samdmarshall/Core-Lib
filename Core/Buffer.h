@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#define S(type) sizeof(type)
+
 struct CoreInternalBuffer {
 	char *data;
 	uint64_t length;
