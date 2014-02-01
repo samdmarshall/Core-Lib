@@ -16,6 +16,7 @@
 #include "Number.h"
 #include "Logging.h"
 #include "Attributes.h"
+#include "Buffer.h"
 
 #pragma mark -
 #pragma mark Geometry
