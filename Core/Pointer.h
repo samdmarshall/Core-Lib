@@ -10,6 +10,7 @@
 #define Core_Pointer_h
 
 #include <stdint.h>
+#include <stdlib.h>
 
 typedef uintptr_t* Pointer;
 typedef uintptr_t* (*FunctionPointer)();
