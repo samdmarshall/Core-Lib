@@ -10,6 +10,7 @@
 #define Core_Vector_c
 
 #include "Vector.h"
+#include "Pointer.h"
 #include <stdlib.h>
 
 static struct Vector VectorDefinedVectors[VectorAxisCount] = {
@@ -120,12 +121,18 @@ VectorPtr VectorCrossVector(VectorPtr vector, VectorPtr crossVector) {
 
 VectorPtr VectorNormalize(VectorPtr vector) {
 	CGFloat denom = CGFloatPow(VectorGetMagnitude(vector),2);
+	VectorPtr vectorNorm;
 	if (denom <= 0.0f) {
-	  return VectorCreateFromVector(VectorAxis(VectorAxisZero));
+		vectorNorm = VectorAxis(VectorAxisZero);
+	} else {
+		denom = 1.0f / CGFloatSqrt(denom);
+		vectorNorm = VectorCreateFromVector(vector);
 	}
-	denom = 1.0f / CGFloatSqrt(denom);
-	VectorPtr resultVector = VectorCreateFromVector(vector);
-	return VectorMultiplyVector(resultVector, denom);
+	VectorPtr normalized = VectorCreateFromVector(vectorNorm);
+	Safe(VectorRelease, vectorNorm);
+	VectorPtr resultVector = VectorMultiplyVector(normalized, denom);
+	Safe(VectorRelease, normalized);
+	return resultVector;
 }
 
 VectorPtr VectorAxis(enum VectorAxis axis) {
@@ -139,9 +146,7 @@ VectorPtr VectorAxis(enum VectorAxis axis) {
 }
 
 void VectorRelease(VectorPtr vector) {
-	if (vector) {
-		free(vector);
-	}
+	Safe(free,vector);
 }
 
 #endif

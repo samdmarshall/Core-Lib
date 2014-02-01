@@ -11,6 +11,7 @@
 
 #include "Matrix.h"
 #include <stdlib.h>
+#include "Pointer.h"
 
 MatrixPtr MatrixCreateFromComponents(VectorPtr xBasis, VectorPtr yBasis, VectorPtr zBasis, VectorPtr origin) {
 	MatrixPtr matrix = (MatrixPtr)calloc(0x1, sizeof(struct Matrix));
@@ -30,7 +31,7 @@ MatrixPtr MatrixCreateFromMatrix(MatrixPtr matrix) {
 MatrixPtr MatrixCreateFromAxisRadians(VectorPtr axis, CGFloat angle) {
 	VectorPtr noTranslate = VectorCreateFromComponents(0.f, 0.f, 0.f);
 	MatrixPtr matrix = MatrixCreateFromAxisRadiansTranslation(axis, angle, noTranslate);
-	VectorRelease(noTranslate);
+	Safe(VectorRelease,noTranslate);
 	return matrix;
 }
 
@@ -58,11 +59,11 @@ MatrixPtr MatrixCreateFromAxisRadiansTranslation(VectorPtr axis, CGFloat angle, 
 	VectorPtr origin = VectorCreateFromComponents(translate->x, translate->y, translate->z);
 	MatrixPtr matrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
 	
-	VectorRelease(axisVector);
-	VectorRelease(xBasis);
-	VectorRelease(yBasis);
-	VectorRelease(zBasis);
-	VectorRelease(origin);
+	Safe(VectorRelease,axisVector);
+	Safe(VectorRelease,xBasis);
+	Safe(VectorRelease,yBasis);
+	Safe(VectorRelease,zBasis);
+	Safe(VectorRelease,origin);
 	return matrix;
 }
 
@@ -73,7 +74,7 @@ bool MatrixEqualsMatrix(MatrixPtr matrix, MatrixPtr equalsMatrix) {
 VectorPtr MatrixTransformPoint(MatrixPtr matrix, VectorPtr point) {
 	VectorPtr xyz = MatrixTransformDirection(matrix, point);
 	VectorPtr xyzo = VectorAddVector(xyz, matrix->origin);
-	VectorRelease(xyz);
+	Safe(VectorRelease,xyz);
 	return xyzo;
 }
 
@@ -83,12 +84,12 @@ VectorPtr MatrixTransformDirection(MatrixPtr matrix, VectorPtr dir) {
 	VectorPtr zBasis = VectorMultiplyVector(matrix->zBasis, dir->z);
 	
 	VectorPtr xy = VectorAddVector(xBasis, yBasis);
-	VectorRelease(xBasis);
-	VectorRelease(yBasis);
+	Safe(VectorRelease,xBasis);
+	Safe(VectorRelease,yBasis);
 	
 	VectorPtr xyz = VectorAddVector(xy, zBasis);
-	VectorRelease(zBasis);
-	VectorRelease(xy);
+	Safe(VectorRelease,zBasis);
+	Safe(VectorRelease,xy);
 	
 	return xyz;
 }
@@ -99,10 +100,10 @@ MatrixPtr MatrixMultiplyMatrix(MatrixPtr matrix, MatrixPtr mulMatrix) {
 	VectorPtr zBasis = MatrixTransformDirection(matrix, mulMatrix->zBasis);
 	VectorPtr origin = MatrixTransformPoint(matrix, mulMatrix->origin);
 	MatrixPtr resultMatrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
-	VectorRelease(xBasis);
-	VectorRelease(yBasis);
-	VectorRelease(zBasis);
-	VectorRelease(origin);
+	Safe(VectorRelease,xBasis);
+	Safe(VectorRelease,yBasis);
+	Safe(VectorRelease,zBasis);
+	Safe(VectorRelease,origin);
 	return resultMatrix;
 }
 
@@ -112,10 +113,10 @@ MatrixPtr MatrixIdentity() {
 	VectorPtr zBasis = VectorCreateFromComponents(0.f,0.f,1.f);
 	VectorPtr origin = VectorCreateFromComponents(0.f,0.f,0.f);
 	MatrixPtr matrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
-	VectorRelease(xBasis);
-	VectorRelease(yBasis);
-	VectorRelease(zBasis);
-	VectorRelease(origin);
+	Safe(VectorRelease,xBasis);
+	Safe(VectorRelease,yBasis);
+	Safe(VectorRelease,zBasis);
+	Safe(VectorRelease,origin);
 	return matrix;
 }
 
@@ -125,29 +126,19 @@ MatrixPtr MatrixRigidInverse(MatrixPtr matrix) {
 	VectorPtr zBasis = VectorCreateFromComponents(matrix->xBasis->z,matrix->yBasis->z,matrix->zBasis->z);
 	VectorPtr origin = MatrixTransformDirection(matrix, matrix->origin);
 	MatrixPtr inverseMatrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
-	VectorRelease(xBasis);
-	VectorRelease(yBasis);
-	VectorRelease(zBasis);
-	VectorRelease(origin);
+	Safe(VectorRelease,xBasis);
+	Safe(VectorRelease,yBasis);
+	Safe(VectorRelease,zBasis);
+	Safe(VectorRelease,origin);
 	return inverseMatrix;
 }
 
 void MatrixRelease(MatrixPtr matrix) {
-	if (matrix->xBasis) {
-		VectorRelease(matrix->xBasis);
-	}
-	if (matrix->yBasis) {
-		VectorRelease(matrix->yBasis);
-	}
-	if (matrix->zBasis) {
-		VectorRelease(matrix->zBasis);
-	}
-	if (matrix->origin) {
-		VectorRelease(matrix->origin);
-	}
-	if (matrix) {
-		free(matrix);
-	}
+	Safe(VectorRelease,matrix->xBasis);
+	Safe(VectorRelease,matrix->yBasis);
+	Safe(VectorRelease,matrix->zBasis);
+	Safe(VectorRelease,matrix->origin);
+	Safe(free,matrix);
 }
 
 #endif

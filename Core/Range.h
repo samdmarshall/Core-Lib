@@ -11,12 +11,12 @@
 
 #include <stdint.h>
 
-struct InternalRange {
+struct CoreInternalRange {
 	uint64_t offset;
 	uint64_t length;
 } ATR_PACK;
 
-typedef struct InternalRange Range;
+typedef struct CoreInternalRange Range;
 
 #define RangeCreate(offset, length) (Range){offset, length}
 #define RangeContainsValue(range, value) (value >= range.offset && value < (range.offet + range.length))
