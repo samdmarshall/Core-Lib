@@ -43,4 +43,10 @@ BufferRef CreateBufferFromFilePath(char *path) {
 	return fileBuffer;
 }
 
+void BufferRefRelease(BufferRef buffer) {
+	if (buffer) {
+		free(buffer->data);
+	}
+}
+
 #endif

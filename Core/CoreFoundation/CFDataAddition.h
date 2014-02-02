@@ -11,6 +11,6 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 
-CFDataRef CFDataFromFilePath(char *path);
+CFDataRef CFDataCreateFromFilePath(char *path);
 
 #endif

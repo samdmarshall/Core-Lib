@@ -13,9 +13,11 @@
 #include "Pointer.h"
 #include "Buffer.h"
 
-CFDataRef CFDataFromFilePath(char *path) {
+CFDataRef CFDataCreateFromFilePath(char *path) {
 	BufferRef fileBuffer = CreateBufferFromFilePath(path);
-	return CFDataCreate(kCFAllocatorDefault, PtrCast(fileBuffer->data,const UInt8*), fileBuffer->length);
+	CFDataRef dataBuffer = CFDataCreate(kCFAllocatorDefault, PtrCast(fileBuffer->data,const UInt8*), fileBuffer->length);
+	Safe(BufferRefRelease, fileBuffer);
+	return dataBuffer;
 }
 
 

@@ -22,5 +22,6 @@ struct CoreInternalBuffer {
 typedef struct CoreInternalBuffer* BufferRef;
 
 BufferRef CreateBufferFromFilePath(char *path);
+void BufferRefRelease(BufferRef buffer);
 
 #endif
