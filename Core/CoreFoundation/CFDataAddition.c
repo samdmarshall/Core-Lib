@@ -15,7 +15,7 @@
 
 CFDataRef CFDataCreateFromFilePath(char *path) {
 	BufferRef fileBuffer = CreateBufferFromFilePath(path);
-	CFDataRef dataBuffer = CFDataCreate(kCFAllocatorDefault, PtrCast(fileBuffer->data,const UInt8*), fileBuffer->length);
+	CFDataRef dataBuffer = CFDataCreate(kCFAllocatorDefault, PtrCast(fileBuffer->data,const UInt8*), (CFIndex)fileBuffer->length);
 	Safe(BufferRefRelease, fileBuffer);
 	return dataBuffer;
 }
