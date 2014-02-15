@@ -27,7 +27,7 @@ BufferRef CreateBufferRef() {
 uint64_t IncrementBufferRefBySize(BufferRef buffer, uint64_t size) {
 	uint64_t oldSize = buffer->length;
 	buffer->length = oldSize+size;
-	buffer->data = realloc(buffer->data, buffer->length);
+	buffer->data = realloc(buffer->data, (unsigned long)buffer->length);
 	memset(&(buffer->data[oldSize]), 0x0, size);
 	return oldSize;
 }
