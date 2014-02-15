@@ -28,6 +28,7 @@ uint64_t IncrementBufferRefBySize(BufferRef buffer, uint64_t size) {
 	uint64_t oldSize = buffer->length;
 	buffer->length = oldSize+size;
 	buffer->data = realloc(buffer->data, buffer->length);
+	memset(&(buffer->data[oldSize]), 0x0, size);
 	return oldSize;
 }
 
@@ -35,6 +36,7 @@ void AppendStringToBuffer(BufferRef buffer, char *append) {
 	BufferRef appendBuffer = CreateBufferRef();
 	IncrementBufferRefBySize(appendBuffer, strlen(append)-0x1);
 	memcpy(appendBuffer->data, append, strlen(append));
+	AppendBufferToBuffer(buffer, appendBuffer);
 }
 
 
