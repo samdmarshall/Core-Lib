@@ -15,6 +15,40 @@
 #include <sys/types.h>
 #include <sys/fcntl.h>
 #include <unistd.h>
+#include <string.h>
+
+BufferRef CreateBufferRef() {
+	BufferRef buffer = calloc(0x1, sizeof(struct CoreInternalBuffer));
+	buffer->data = calloc(0x1, sizeof(char));
+	buffer->length = 0x1;
+	return buffer;
+}
+
+uint64_t IncrementBufferRefBySize(BufferRef buffer, uint64_t size) {
+	uint64_t oldSize = buffer->length;
+	buffer->length = oldSize+size;
+	buffer->data = realloc(buffer->data, buffer->length);
+	return oldSize;
+}
+
+void AppendStringToBuffer(BufferRef buffer, char *append) {
+	BufferRef appendBuffer = CreateBufferRef();
+	IncrementBufferRefBySize(appendBuffer, strlen(append)-0x1);
+	memcpy(appendBuffer->data, append, strlen(append));
+}
+
+
+void AppendBufferToBuffer(BufferRef buffer, BufferRef append) {
+	uint64_t offset = IncrementBufferRefBySize(buffer, append->length);
+	memcpy(&(buffer->data[offset]), append->data, append->length);
+}
+
+BufferRef CreateBufferFromBufferWithRange(BufferRef buffer, Range subRange) {
+	BufferRef sub = CreateBufferRef();
+	IncrementBufferRefBySize(sub, subRange.length-0x1);
+	memcpy(sub->data, &(buffer->data[subRange.offset]), subRange.length);
+	return sub;
+}
 
 BufferRef CreateBufferFromFilePath(char *path) {
 	BufferRef fileBuffer = calloc(0x1, sizeof(struct CoreInternalBuffer));

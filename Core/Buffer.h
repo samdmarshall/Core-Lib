@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include "Range.h"
 
 #define S(type) sizeof(type)
 
@@ -20,6 +21,15 @@ struct CoreInternalBuffer {
 };
 
 typedef struct CoreInternalBuffer* BufferRef;
+
+BufferRef CreateBufferRef();
+// returns old size
+uint64_t IncrementBufferRefBySize(BufferRef buffer, uint64_t size);
+
+void AppendStringToBuffer(BufferRef buffer, char *append);
+void AppendBufferToBuffer(BufferRef buffer, BufferRef append);
+
+BufferRef CreateBufferFromBufferWithRange(BufferRef buffer, Range subRange);
 
 BufferRef CreateBufferFromFilePath(char *path);
 void BufferRefRelease(BufferRef buffer);

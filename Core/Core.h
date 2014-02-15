@@ -17,6 +17,7 @@
 #include "Logging.h"
 #include "Attributes.h"
 #include "Buffer.h"
+#include "Array.h"
 
 #pragma mark -
 #pragma mark Geometry
