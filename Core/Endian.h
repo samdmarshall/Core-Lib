@@ -1,0 +1,33 @@
+//
+//  Endian.h
+//  Core
+//
+//  Created by Sam Marshall on 4/5/14.
+//
+//
+
+#ifndef Core_Endian_h
+#define Core_Endian_h
+
+#ifndef __APPLE__
+	#warning "This header file (endian.h) is MacOS X specific.\n"
+#endif	/* __APPLE__ */
+
+#include <libkern/OSByteOrder.h>
+
+#define htobe16(x) OSSwapHostToBigInt16(x)
+#define htole16(x) OSSwapHostToLittleInt16(x)
+#define be16toh(x) OSSwapBigToHostInt16(x)
+#define le16toh(x) OSSwapLittleToHostInt16(x)
+
+#define htobe32(x) OSSwapHostToBigInt32(x)
+#define htole32(x) OSSwapHostToLittleInt32(x)
+#define be32toh(x) OSSwapBigToHostInt32(x)
+#define le32toh(x) OSSwapLittleToHostInt32(x)
+
+#define htobe64(x) OSSwapHostToBigInt64(x)
+#define htole64(x) OSSwapHostToLittleInt64(x)
+#define be64toh(x) OSSwapBigToHostInt64(x)
+#define le64toh(x) OSSwapLittleToHostInt64(x)
+
+#endif

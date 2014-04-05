@@ -18,6 +18,7 @@
 #include "Attributes.h"
 #include "Buffer.h"
 #include "Array.h"
+#include "Endian.h"
 
 #pragma mark -
 #pragma mark Geometry
