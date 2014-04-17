@@ -13,6 +13,15 @@
 #include "Pointer.h"
 #include "Buffer.h"
 
+CFDataRef CFDataCreateFromPath(CFStringRef path) {
+	CFIndex alloclen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(path), kCFStringEncodingUTF8) + 1;
+	char *cstr_path = calloc(1, alloclen);
+	CFStringGetCString(path, cstr_path, alloclen, kCFStringEncodingUTF8);
+	CFDataRef data = CFDataCreateFromFilePath(cstr_path);
+	Safe(free,cstr_path);
+	return data;
+}
+
 CFDataRef CFDataCreateFromFilePath(char *path) {
 	BufferRef fileBuffer = CreateBufferFromFilePath(path);
 	CFDataRef dataBuffer = CFDataCreate(kCFAllocatorDefault, PtrCast(fileBuffer->data,const UInt8*), (CFIndex)fileBuffer->length);
