@@ -12,5 +12,6 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 CFDataRef CFDataCreateFromFilePath(char *path);
+CFDataRef CFDataCreateFromSubrangeOfData(CFDataRef data, CFRange range);
 
 #endif

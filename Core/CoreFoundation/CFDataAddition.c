@@ -20,5 +20,13 @@ CFDataRef CFDataCreateFromFilePath(char *path) {
 	return dataBuffer;
 }
 
+CFDataRef CFDataCreateFromSubrangeOfData(CFDataRef data, CFRange range) {
+	CFMutableDataRef sub_data = CFDataCreateMutable(kCFAllocatorDefault, 0);
+	UInt8 bytes[range.length];
+	CFDataGetBytes(data, range, bytes);
+	CFDataAppendBytes(sub_data, bytes, range.length);
+	return sub_data;
+}
+
 
 #endif

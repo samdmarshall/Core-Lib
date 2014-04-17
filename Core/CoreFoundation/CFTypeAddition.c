@@ -53,7 +53,7 @@ CFStringRef CFTypeStringRep(CFTypeRef value) {
 			case kCFNumberSInt32Type: {
 				SInt32 number;
 				CFNumberGetValue(value, numberType, &number);
-				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%d"),number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%d"),(int32_t)number);
 				break;
 			};
 			case kCFNumberSInt64Type: {
@@ -125,7 +125,7 @@ CFStringRef CFTypeStringRep(CFTypeRef value) {
 			case kCFNumberNSIntegerType: {
 				NSInteger number;
 				CFNumberGetValue(value, numberType, &number);
-				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%ld"),number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%ld"),(long)number);
 				break;
 			};
 			case kCFNumberCGFloatType: {
