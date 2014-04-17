@@ -19,6 +19,7 @@
 #include "Buffer.h"
 #include "Array.h"
 #include "Endian.h"
+#include "File.h"
 
 #pragma mark -
 #pragma mark Geometry
