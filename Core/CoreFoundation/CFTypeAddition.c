@@ -17,6 +17,135 @@
 
 extern void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t depth);
 
+CFStringRef CFTypeStringRep(CFTypeRef value) {
+	CFStringRef string_rep = NULL;
+	
+	CFStringRef valueType = CFCopyTypeIDDescription(CFGetTypeID(value));
+	
+	CFStringRef booleanType = CFCopyTypeIDDescription(CFBooleanGetTypeID());
+	if (CFStringCompare(valueType, booleanType, 0x0) == kCFCompareEqualTo) {
+		string_rep = (CFBooleanGetValue(value) ? CFSTR("1") : CFSTR("0"));
+	}
+	CFSafeRelease(booleanType);
+	
+	CFStringRef stringType = CFCopyTypeIDDescription(CFStringGetTypeID());
+	if (CFStringCompare(valueType, stringType, 0x0) == kCFCompareEqualTo) {
+		string_rep = CFStringCreateCopy(kCFAllocatorDefault, value);
+	}
+	CFSafeRelease(stringType);
+	
+	CFStringRef numberType = CFCopyTypeIDDescription(CFNumberGetTypeID());
+	if (CFStringCompare(valueType, numberType, 0x0) == kCFCompareEqualTo) {
+		CFIndex numberType = CFNumberGetType(value);
+		switch (numberType) {
+			case kCFNumberSInt8Type: {
+				SInt8 number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%hhd"),number);
+				break;
+			};
+			case kCFNumberSInt16Type: {
+				SInt16 number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%hd"),number);
+				break;
+			};
+			case kCFNumberSInt32Type: {
+				SInt32 number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%d"),number);
+				break;
+			};
+			case kCFNumberSInt64Type: {
+				SInt64 number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%lld"),number);
+				break;
+			};
+			case kCFNumberFloat32Type: {
+				Float32 number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%.f"),number);
+				break;
+			};
+			case kCFNumberFloat64Type: {
+				Float64 number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%.f"),number);
+				break;
+			};
+			case kCFNumberCharType: {
+				char number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%c"),number);
+				break;
+			};
+			case kCFNumberShortType: {
+				short number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%hd"),number);
+				break;
+			};
+			case kCFNumberIntType: {
+				int number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%d"),number);
+				break;
+			};
+			case kCFNumberLongType: {
+				long number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%ld"),number);
+				break;
+			};
+			case kCFNumberLongLongType: {
+				long long number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%qd"),number);
+				break;
+			};
+			case kCFNumberFloatType: {
+				float number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%.f"),number);
+				break;
+			};
+			case kCFNumberDoubleType: {
+				double number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%.f"),number);
+				break;
+			};
+			case kCFNumberCFIndexType: {
+				CFIndex number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%ld"),number);
+				break;
+			};
+			case kCFNumberNSIntegerType: {
+				NSInteger number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%ld"),number);
+				break;
+			};
+			case kCFNumberCGFloatType: {
+				CGFloat number;
+				CFNumberGetValue(value, numberType, &number);
+				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%.f"),number);
+				break;
+			};
+			default: {
+				break;
+			};
+		}
+	}
+	CFSafeRelease(numberType);
+
+	CFSafeRelease(valueType);
+	
+	return string_rep;
+}
+
 void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 	bool foundType = false;
 	CFStringRef valueType = CFCopyTypeIDDescription(CFGetTypeID(value));

@@ -12,7 +12,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 void PrintCFType(CFTypeRef value);
-
+CFStringRef CFTypeStringRep(CFTypeRef value);
 void CFSafeRelease(CFTypeRef CF_RELEASES_ARGUMENT var);
 
 #endif
