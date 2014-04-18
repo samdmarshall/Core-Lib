@@ -72,7 +72,7 @@ BufferRef CreateBufferFromFilePath(char *path) {
 			return fileBuffer;
 		}
 		
-		fileBuffer->data = calloc(fileStat.st_size, sizeof(char));
+		fileBuffer->data = calloc((uint32_t)fileStat.st_size, sizeof(char));
 		fileBuffer->length = read(ref, fileBuffer->data, (size_t)fileStat.st_size);
 		
 		close(ref);
