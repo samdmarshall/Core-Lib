@@ -152,7 +152,7 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 	CFStringRef dictionaryType = CFCopyTypeIDDescription(CFDictionaryGetTypeID());
 	if (CFStringCompare(valueType, dictionaryType, 0x0) == kCFCompareEqualTo) {
 		foundType = true;
-		printf("{\n");
+		printf("<CFDictionary>={\n");
 		PrintCFDictionaryInternalFormatting(value, depth+0x1);
 		PrintDepth(depth,"}\n");
 	}
@@ -161,116 +161,117 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 	CFStringRef booleanType = CFCopyTypeIDDescription(CFBooleanGetTypeID());
 	if (CFStringCompare(valueType, booleanType, 0x0) == kCFCompareEqualTo) {
 		foundType = true;
-		printf("%s\n",(CFBooleanGetValue(value) ? "True" : "False"));
+		printf("<CFBoolean>={%s}\n",(CFBooleanGetValue(value) ? "True" : "False"));
 	}
 	CFSafeRelease(booleanType);
 	
 	CFStringRef stringType = CFCopyTypeIDDescription(CFStringGetTypeID());
 	if (CFStringCompare(valueType, stringType, 0x0) == kCFCompareEqualTo) {
 		foundType = true;
-		printf("%s\n",(char*)CFStringGetCStringPtr(value,kCFStringEncodingUTF8));
+		printf("<CFStringRef>={%s}\n",(char *)CFStringGetCStringPtr(value,kCFStringEncodingUTF8));
 	}
 	CFSafeRelease(stringType);
 	
 	CFStringRef numberType = CFCopyTypeIDDescription(CFNumberGetTypeID());
 	if (CFStringCompare(valueType, numberType, 0x0) == kCFCompareEqualTo) {
 		foundType = true;
+		printf("<CFNumberRef>=(");
 		CFIndex numberType = CFNumberGetType(value);
 		switch (numberType) {
 			case kCFNumberSInt8Type: {
 				SInt8 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%hhd\n",number);
+				printf("kCFNumberSInt8Type){%hhd}\n",number);
 				break;
 			};
 			case kCFNumberSInt16Type: {
 				SInt16 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%hd\n",number);
+				printf("kCFNumberSInt16Type){%hd}\n",number);
 				break;
 			};
 			case kCFNumberSInt32Type: {
 				SInt32 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%d\n",(int32_t)number);
+				printf("kCFNumberSInt32Type){%d}\n",(int32_t)number);
 				break;
 			};
 			case kCFNumberSInt64Type: {
 				SInt64 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%lld\n",number);
+				printf("kCFNumberSInt64Type){%lld}\n",number);
 				break;
 			};
 			case kCFNumberFloat32Type: {
 				Float32 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%.f\n",number);
+				printf("kCFNumberFloat32Type){%f}\n",number);
 				break;
 			};
 			case kCFNumberFloat64Type: {
 				Float64 number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%.f\n",number);
+				printf("kCFNumberFloat64Type){%f}\n",number);
 				break;
 			};
 			case kCFNumberCharType: {
 				char number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%c\n",number);
+				printf("kCFNumberCharType){%c}\n",number);
 				break;
 			};
 			case kCFNumberShortType: {
 				short number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%hd\n",number);
+				printf("kCFNumberShortType){%hd}\n",number);
 				break;
 			};
 			case kCFNumberIntType: {
 				int number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%d\n",number);
+				printf("kCFNumberIntType){%d}\n",number);
 				break;
 			};
 			case kCFNumberLongType: {
 				long number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%ld\n",number);
+				printf("kCFNumberLongType){%ld}\n",number);
 				break;
 			};
 			case kCFNumberLongLongType: {
 				long long number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%qd\n",number);
+				printf("kCFNumberLongLongType){%qd}\n",number);
 				break;
 			};
 			case kCFNumberFloatType: {
 				float number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%.f\n",number);
+				printf("kCFNumberFloatType){%f}\n",number);
 				break;
 			};
 			case kCFNumberDoubleType: {
 				double number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%.f\n",number);
+				printf("kCFNumberDoubleType){%f}\n",number);
 				break;
 			};
 			case kCFNumberCFIndexType: {
 				CFIndex number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%ld\n",number);
+				printf("kCFNumberCFIndexType){%ld}\n",number);
 				break;
 			};
 			case kCFNumberNSIntegerType: {
 				NSInteger number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%ld\n",(long)number);
+				printf("kCFNumberNSIntegerType){%ld}\n",(long)number);
 				break;
 			};
 			case kCFNumberCGFloatType: {
 				CGFloat number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("%.f\n",number);
+				printf("kCFNumberCGFloatType){%f}\n",number);
 				break;
 			};
 			default: {
@@ -284,7 +285,7 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 	if (CFStringCompare(valueType, arrayType, 0x0) == kCFCompareEqualTo) {
 		foundType = true;
 		CFIndex count = CFArrayGetCount(value);
-		printf("[\n");
+		printf("<CFArray>=[\n");
 		for (CFIndex i = 0x0; i < count; i++) {
 			CFTypeRef item = CFArrayGetValueAtIndex(value, i);
 			PrintDepth(depth+0x1,"");
@@ -296,7 +297,7 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 	
 	if (!foundType) {
 		CFStringRef description = CFCopyDescription(value);
-		printf("%s\n",(char*)CFStringGetCStringPtr(description,kCFStringEncodingUTF8));
+		printf("<%s>={%s}\n",(char *)CFStringGetCStringPtr(valueType,kCFStringEncodingUTF8),(char *)CFStringGetCStringPtr(description,kCFStringEncodingUTF8));
 		CFSafeRelease(description);
 	}
 	

@@ -12,7 +12,11 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 CFDataRef CFDataCreateFromPath(CFStringRef path);
-CFDataRef CFDataCreateFromFilePath(char *path);
+CFDataRef CFDataCreateFromFilePath(char * path);
+
 CFDataRef CFDataCreateFromSubrangeOfData(CFDataRef data, CFRange range);
+
+Boolean CFDateWriteToPath(CFDataRef data, CFStringRef path);
+Boolean CFDateWriteToFilePath(CFDataRef data, char * path);
 
 #endif

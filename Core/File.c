@@ -13,12 +13,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-bool FileExistsAtPath(char *path) {
+bool FileExistsAtPath(char * path) {
 	bool isDir;
 	return FileExistsAtPathIsDir(path, &isDir);
 }
 
-bool FileExistsAtPathIsDir(char *path, bool *dir) {
+bool FileExistsAtPathIsDir(char * path, bool * dir) {
 	bool result = false;
 	if (path) {
 		struct stat pathStat;

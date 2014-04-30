@@ -16,6 +16,6 @@ struct CoreInternalArray {
 	uint64_t count;
 } ATR_PACK;
 
-typedef struct CoreInternalArray* ArrayRef;
+typedef struct CoreInternalArray * ArrayRef;
 
 #endif

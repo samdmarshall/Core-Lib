@@ -20,11 +20,11 @@ void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t de
 	CFIndex keyCount = CFDictionaryGetCount(dictionary);
 	Pointer keys[keyCount];
 	Pointer values[keyCount];
-	CFDictionaryGetKeysAndValues(dictionary, PtrCast(keys,const void**), PtrCast(values,const void**));
+	CFDictionaryGetKeysAndValues(dictionary, PtrCast(keys,const void **), PtrCast(values,const void **));
 	for (uint32_t i = 0x0; i < keyCount; i++) {
 		CFStringRef key = PtrCast(keys[i],CFStringRef);
 		CFTypeRef value = PtrCast(values[i],CFTypeRef);
-		PrintDepth(depth,"%s: ",(char*)CFStringGetCStringPtr(key,kCFStringEncodingUTF8));
+		PrintDepth(depth,"%s: ",(char *)CFStringGetCStringPtr(key,kCFStringEncodingUTF8));
 		PrintCFTypeInternalFormat(value, depth);
 	}
 }

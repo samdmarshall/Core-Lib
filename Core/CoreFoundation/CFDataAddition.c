@@ -12,17 +12,18 @@
 #include "CFDataAddition.h"
 #include "Pointer.h"
 #include "Buffer.h"
+#include "CFStringAddition.h"
 
 CFDataRef CFDataCreateFromPath(CFStringRef path) {
 	CFIndex alloclen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(path), kCFStringEncodingUTF8) + 1;
-	char *cstr_path = calloc(1, alloclen);
+	char * cstr_path = calloc(1, alloclen);
 	CFStringGetCString(path, cstr_path, alloclen, kCFStringEncodingUTF8);
 	CFDataRef data = CFDataCreateFromFilePath(cstr_path);
 	Safe(free,cstr_path);
 	return data;
 }
 
-CFDataRef CFDataCreateFromFilePath(char *path) {
+CFDataRef CFDataCreateFromFilePath(char * path) {
 	BufferRef fileBuffer = CreateBufferFromFilePath(path);
 	CFDataRef dataBuffer = CFDataCreate(kCFAllocatorDefault, PtrCast(fileBuffer->data,const UInt8*), (CFIndex)fileBuffer->length);
 	Safe(BufferRefRelease, fileBuffer);
@@ -35,6 +36,29 @@ CFDataRef CFDataCreateFromSubrangeOfData(CFDataRef data, CFRange range) {
 	CFDataGetBytes(data, range, bytes);
 	CFDataAppendBytes(sub_data, bytes, range.length);
 	return sub_data;
+}
+
+Boolean CFDateWriteToPath(CFDataRef data, CFStringRef path) {
+	char *c_path = CreateCStringFromCFStringRef(path);
+	Boolean result = CFDateWriteToFilePath(data, c_path);
+	free(c_path);
+	return result;
+}
+
+Boolean CFDateWriteToFilePath(CFDataRef data, char * path) {
+	Boolean result = true;
+	mode_t fileMode = (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+	int ref = open(path, O_CREAT | O_EXCL | O_WRONLY, fileMode);
+	if (ref != -1) {
+		CFIndex length = CFDataGetLength(data);
+		CFIndex write_length = write(ref, CFDataGetBytePtr(data), length);
+		result = ((write_length == length) ? true : false);
+		close(ref);
+	}
+	else {
+		result = false;
+	}
+	return result;
 }
 
 

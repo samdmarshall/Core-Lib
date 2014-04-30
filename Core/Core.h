@@ -35,6 +35,7 @@
 #include "CFDictionaryAddition.h"
 #include "CFTypeAddition.h"
 #include "CFDataAddition.h"
+#include "CFStringAddition.h"
 #endif
 
 

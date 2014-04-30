@@ -32,7 +32,7 @@ uint64_t IncrementBufferRefBySize(BufferRef buffer, uint64_t size) {
 	return oldSize;
 }
 
-void AppendStringToBuffer(BufferRef buffer, char *append) {
+void AppendStringToBuffer(BufferRef buffer, char * append) {
 	BufferRef appendBuffer = CreateBufferRef();
 	IncrementBufferRefBySize(appendBuffer, strlen(append)-0x1);
 	memcpy(appendBuffer->data, append, strlen(append));
@@ -52,7 +52,7 @@ BufferRef CreateBufferFromBufferWithRange(BufferRef buffer, Range subRange) {
 	return sub;
 }
 
-BufferRef CreateBufferFromFilePath(char *path) {
+BufferRef CreateBufferFromFilePath(char * path) {
 	BufferRef fileBuffer = calloc(0x1, sizeof(struct CoreInternalBuffer));
 	if (path) {
 		struct stat pathStat;
