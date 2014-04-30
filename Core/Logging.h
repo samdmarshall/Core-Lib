@@ -127,4 +127,10 @@ ATR_UNUSED static char* PrintCodeString[PrintCode_Count] = {
 	printf(__VA_ARGS__);
 
 
+#define PrintSHA1Hash(hash) \
+for(uint8_t i = 0; i < SHA_DIGEST_LENGTH; i++) { \
+	printf("%02x",hash[i]); \
+} \
+printf("\n");
+
 #endif
