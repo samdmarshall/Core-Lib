@@ -16,7 +16,7 @@ CFDataRef CFDataCreateFromFilePath(char * path);
 
 CFDataRef CFDataCreateFromSubrangeOfData(CFDataRef data, CFRange range);
 
-Boolean CFDateWriteToPath(CFDataRef data, CFStringRef path);
-Boolean CFDateWriteToFilePath(CFDataRef data, char * path);
+Boolean CFDataWriteToPath(CFDataRef data, CFStringRef path);
+Boolean CFDataWriteToFilePath(CFDataRef data, char * path);
 
 #endif

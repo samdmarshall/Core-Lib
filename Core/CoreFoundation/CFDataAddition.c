@@ -38,14 +38,14 @@ CFDataRef CFDataCreateFromSubrangeOfData(CFDataRef data, CFRange range) {
 	return sub_data;
 }
 
-Boolean CFDateWriteToPath(CFDataRef data, CFStringRef path) {
+Boolean CFDataWriteToPath(CFDataRef data, CFStringRef path) {
 	char *c_path = CreateCStringFromCFStringRef(path);
-	Boolean result = CFDateWriteToFilePath(data, c_path);
+	Boolean result = CFDataWriteToFilePath(data, c_path);
 	free(c_path);
 	return result;
 }
 
-Boolean CFDateWriteToFilePath(CFDataRef data, char * path) {
+Boolean CFDataWriteToFilePath(CFDataRef data, char * path) {
 	Boolean result = true;
 	mode_t fileMode = (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 	int ref = open(path, O_CREAT | O_EXCL | O_WRONLY, fileMode);
