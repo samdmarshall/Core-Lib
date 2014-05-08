@@ -17,25 +17,25 @@
 
 extern void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t depth);
 
-CFStringRef CFTypeStringRep(CFTypeRef value) {
+CF_RETURNS_RETAINED CFStringRef CFTypeStringRep(CFTypeRef value) {
 	CFStringRef string_rep = NULL;
 	
 	CFStringRef valueType = CFCopyTypeIDDescription(CFGetTypeID(value));
 	
 	CFStringRef booleanType = CFCopyTypeIDDescription(CFBooleanGetTypeID());
 	if (CFStringCompare(valueType, booleanType, 0x0) == kCFCompareEqualTo) {
-		string_rep = (CFBooleanGetValue(value) ? CFSTR("1") : CFSTR("0"));
+		string_rep = CFStringCreateCopy(kCFAllocatorDefault, CFBooleanGetValue(value) ? CFSTR("1") : CFSTR("0"));
 	}
 	CFSafeRelease(booleanType);
 	
 	CFStringRef stringType = CFCopyTypeIDDescription(CFStringGetTypeID());
-	if (CFStringCompare(valueType, stringType, 0x0) == kCFCompareEqualTo) {
+	if (!string_rep && CFStringCompare(valueType, stringType, 0x0) == kCFCompareEqualTo) {
 		string_rep = CFStringCreateCopy(kCFAllocatorDefault, value);
 	}
 	CFSafeRelease(stringType);
 	
 	CFStringRef numberType = CFCopyTypeIDDescription(CFNumberGetTypeID());
-	if (CFStringCompare(valueType, numberType, 0x0) == kCFCompareEqualTo) {
+	if (!string_rep && CFStringCompare(valueType, numberType, 0x0) == kCFCompareEqualTo) {
 		CFIndex numberType = CFNumberGetType(value);
 		switch (numberType) {
 			case kCFNumberSInt8Type: {
