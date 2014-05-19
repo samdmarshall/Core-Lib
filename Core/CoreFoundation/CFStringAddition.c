@@ -12,14 +12,10 @@
 #include "CFStringAddition.h"
 
 char * CreateCStringFromCFStringRef(CFStringRef string) {
-	CFIndex length = CFStringGetLength(string) + 1;
-	char * c_path = calloc(length, sizeof(char));
-	Boolean result = CFStringGetCString(string, c_path, length, kCFStringEncodingUTF8);
-	if (result == false) {
-		free(c_path);
-		c_path = "";
-	}
-	return c_path;
+	CFIndex alloclen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(string), kCFStringEncodingUTF8) + 1;
+	char *cstr = calloc(alloclen, sizeof(char));
+	CFStringGetCString(string, cstr, alloclen, kCFStringEncodingUTF8);
+	return cstr;
 }
 
 #endif
