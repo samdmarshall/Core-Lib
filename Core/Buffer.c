@@ -37,6 +37,7 @@ void AppendStringToBuffer(BufferRef buffer, char * append) {
 	IncrementBufferRefBySize(appendBuffer, strlen(append)-0x1);
 	memcpy(appendBuffer->data, append, strlen(append));
 	AppendBufferToBuffer(buffer, appendBuffer);
+	BufferRefRelease(appendBuffer);
 }
 
 
@@ -84,6 +85,7 @@ void BufferRefRelease(BufferRef buffer) {
 	if (buffer) {
 		free(buffer->data);
 	}
+	free(buffer);
 }
 
 #endif
