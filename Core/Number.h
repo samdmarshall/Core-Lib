@@ -127,7 +127,7 @@
 #define CGFloatFMax(a, b) CGFloatMath(fmax,(a, b))
 #define CGFloatFMin(a, b) CGFloatMath(fmin,(a, b))
 
-#pragma Misc Functions
+#pragma mark Misc Functions
 #define CGFloatAbs(a) CGFloatMath(fabs,(a))
 #define CGFloatFMA(a, b, c) CGFloatMath(fma,(a, b, c))
 
