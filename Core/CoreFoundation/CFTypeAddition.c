@@ -259,7 +259,7 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 			case kCFNumberCFIndexType: {
 				CFIndex number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("kCFNumberCFIndexType){%ld}\n",number);
+				printf("kCFNumberCFIndexType){%zd}\n",number);
 				break;
 			};
 			case kCFNumberNSIntegerType: {
