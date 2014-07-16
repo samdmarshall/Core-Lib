@@ -12,7 +12,6 @@
 #include "CFTypeAddition.h"
 #include "CFDictionaryAddition.h"
 #include "Number.h"
-#include <objc/NSObjCRuntime.h>
 #include "Logging.h"
 
 extern void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t depth);
@@ -123,8 +122,17 @@ CF_RETURNS_RETAINED CFStringRef CFTypeStringRep(CFTypeRef value) {
 				break;
 			};
 			case kCFNumberNSIntegerType: {
-				NSInteger number;
-				CFNumberGetValue(value, numberType, &number);
+                long number;
+                // Behavior determined from CFBigNumber sources
+                if (sizeof(long) == 8) { // NSInteger follows long
+                    int64_t numberInternal;
+                    CFNumberGetValue(value, numberType, &numberInternal);
+                    number = numberInternal;
+                } else {
+                    int32_t numberInternal;
+                    CFNumberGetValue(value, numberType, &numberInternal);
+                    number = numberInternal;
+                }
 				string_rep = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%ld"),(long)number);
 				break;
 			};
@@ -259,12 +267,21 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth) {
 			case kCFNumberCFIndexType: {
 				CFIndex number;
 				CFNumberGetValue(value, numberType, &number);
-				printf("kCFNumberCFIndexType){%ld}\n",number);
+				printf("kCFNumberCFIndexType){%zd}\n",number);
 				break;
 			};
 			case kCFNumberNSIntegerType: {
-				NSInteger number;
-				CFNumberGetValue(value, numberType, &number);
+                long number;
+                // Behavior determined from CFBigNumber sources
+                if (sizeof(long) == 8) { // NSInteger follows long
+                    int64_t numberInternal;
+                    CFNumberGetValue(value, numberType, &numberInternal);
+                    number = numberInternal;
+                } else {
+                    int32_t numberInternal;
+                    CFNumberGetValue(value, numberType, &numberInternal);
+                    number = numberInternal;
+                }
 				printf("kCFNumberNSIntegerType){%ld}\n",(long)number);
 				break;
 			};

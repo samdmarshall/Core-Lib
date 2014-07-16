@@ -1,0 +1,49 @@
+libname = SDMCore
+
+CFLAGS += -fPIC
+CFLAGS += -O3
+CFLAGS += -I./
+CFLAGS += -include ./CFLinuxCompatibility.h
+
+CXXFLAGS += -fPIC
+CXXFLAGS += -O3
+
+LDLIBS += -lc
+LDLIBS += -lm
+LDLIBS += -lCoreFoundation
+LDLIBS += -L$(PREFIX)/lib
+
+objects = \
+	Buffer.o \
+	File.o \
+	CoreFoundation/CFDataAddition.o \
+	CoreFoundation/CFDictionaryAddition.o \
+	CoreFoundation/CFStringAddition.o \
+	CoreFoundation/CFTypeAddition.o \
+	Geometry/Matrix.o \
+	Geometry/Vector.o
+
+lib$(libname).so : $(objects)
+	$(LINK.cc) -shared $^ $(LOADLIBES) $(LDLIBS) -o $@
+
+$(objects) : \
+	Array.h \
+	Attributes.h \
+	Buffer.h \
+	Endian.h \
+	File.h \
+	Logging.h \
+	Number.h \
+	Pointer.h \
+	Range.h \
+	CoreFoundation/CFDataAddition.h \
+	CoreFoundation/CFDictionaryAddition.h \
+	CoreFoundation/CFStringAddition.h \
+	CoreFoundation/CFTypeAddition.h \
+	Geometry/GeometryMaths.h \
+	Geometry/Matrix.h \
+	Geometry/Vector.h
+
+.PHONY : clean
+clean :
+	-rm -f $(objects) lib$(libname).so
