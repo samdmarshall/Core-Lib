@@ -9,6 +9,9 @@
 #ifndef Core_CFDataAddition_c
 #define Core_CFDataAddition_c
 
+#include <sys/stat.h>
+#include <sys/fcntl.h>
+#include <unistd.h>
 #include "CFDataAddition.h"
 #include "Pointer.h"
 #include "Buffer.h"

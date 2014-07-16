@@ -9,9 +9,7 @@
 #ifndef Core_Endian_h
 #define Core_Endian_h
 
-#ifndef __APPLE__
-	#warning "This header file (endian.h) is MacOS X specific.\n"
-#endif	/* __APPLE__ */
+#ifdef __APPLE__
 
 #include <libkern/OSByteOrder.h>
 
@@ -29,5 +27,7 @@
 #define htole64(x) OSSwapHostToLittleInt64(x)
 #define be64toh(x) OSSwapBigToHostInt64(x)
 #define le64toh(x) OSSwapLittleToHostInt64(x)
+
+#endif
 
 #endif
