@@ -9,7 +9,7 @@
 #ifndef Core_Vector_h
 #define Core_Vector_h
 
-#include "Number.h"
+#include "../Number.h"
 #include "GeometryMaths.h"
 #include <stdbool.h>
 

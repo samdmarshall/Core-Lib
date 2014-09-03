@@ -2,7 +2,6 @@ libname = SDMCore
 
 CFLAGS += -fPIC
 CFLAGS += -O3
-CFLAGS += -I./
 CFLAGS += -include ./CFLinuxCompatibility.h
 
 CXXFLAGS += -fPIC

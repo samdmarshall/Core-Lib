@@ -10,7 +10,7 @@
 #define Core_Vector_c
 
 #include "Vector.h"
-#include "Pointer.h"
+#include "../Pointer.h"
 #include <stdlib.h>
 
 static struct Vector VectorDefinedVectors[VectorAxisCount] = {

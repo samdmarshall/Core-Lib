@@ -10,8 +10,8 @@
 #define Core_CFDictionaryAddition_c
 
 #include "CFDictionaryAddition.h"
-#include "Pointer.h"
-#include "Logging.h"
+#include "../Pointer.h"
+#include "../Logging.h"
 #include "CFTypeAddition.h"
 
 extern void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth);

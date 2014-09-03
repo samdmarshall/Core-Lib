@@ -11,7 +11,7 @@
 
 #include "Matrix.h"
 #include <stdlib.h>
-#include "Pointer.h"
+#include "../Pointer.h"
 
 MatrixPtr MatrixCreateFromComponents(VectorPtr xBasis, VectorPtr yBasis, VectorPtr zBasis, VectorPtr origin) {
 	MatrixPtr matrix = (MatrixPtr)calloc(0x1, sizeof(struct Matrix));
