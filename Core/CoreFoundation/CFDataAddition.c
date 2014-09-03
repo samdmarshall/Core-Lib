@@ -13,8 +13,8 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 #include "CFDataAddition.h"
-#include "Pointer.h"
-#include "Buffer.h"
+#include "../Pointer.h"
+#include "../Buffer.h"
 #include "CFStringAddition.h"
 
 CFDataRef CFDataCreateFromPath(CFStringRef path) {

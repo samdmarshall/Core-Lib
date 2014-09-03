@@ -11,11 +11,6 @@
 
 #if __linux__
 
-// Note: This was only necessary for cross-compiling from OS X.
-// I had to symlink a copy of $SYSROOT/usr/include/endian.h to
-// $SYSROOT/usr/include/endian_.h to make it really get included.
-#include <endian_.h>
-
 #include <sys/types.h>
 
 typedef int kern_return_t;

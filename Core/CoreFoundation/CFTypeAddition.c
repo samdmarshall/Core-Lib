@@ -11,8 +11,8 @@
 
 #include "CFTypeAddition.h"
 #include "CFDictionaryAddition.h"
-#include "Number.h"
-#include "Logging.h"
+#include "../Number.h"
+#include "../Logging.h"
 
 extern void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t depth);
 
