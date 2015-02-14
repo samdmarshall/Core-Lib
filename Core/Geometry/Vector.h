@@ -33,7 +33,7 @@ struct Vector {
 	CGFloat z;
 };
 
-typedef struct Vector* VectorPtr;
+typedef struct Vector *VectorPtr;
 
 VectorPtr VectorCreateFromComponents(CGFloat x, CGFloat y, CGFloat z);
 VectorPtr VectorCreateFromVector(VectorPtr vector);

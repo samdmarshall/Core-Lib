@@ -13,7 +13,8 @@
 #include <stdlib.h>
 #include "../Pointer.h"
 
-MatrixPtr MatrixCreateFromComponents(VectorPtr xBasis, VectorPtr yBasis, VectorPtr zBasis, VectorPtr origin) {
+MatrixPtr MatrixCreateFromComponents(VectorPtr xBasis, VectorPtr yBasis, VectorPtr zBasis, VectorPtr origin)
+{
 	MatrixPtr matrix = (MatrixPtr)calloc(0x1, sizeof(struct Matrix));
 	if (matrix) {
 		matrix->xBasis = VectorCreateFromVector(xBasis);
@@ -24,121 +25,131 @@ MatrixPtr MatrixCreateFromComponents(VectorPtr xBasis, VectorPtr yBasis, VectorP
 	return matrix;
 }
 
-MatrixPtr MatrixCreateFromMatrix(MatrixPtr matrix) {
+MatrixPtr MatrixCreateFromMatrix(MatrixPtr matrix)
+{
 	return MatrixCreateFromComponents(matrix->xBasis, matrix->yBasis, matrix->zBasis, matrix->origin);
 }
 
-MatrixPtr MatrixCreateFromAxisRadians(VectorPtr axis, CGFloat angle) {
+MatrixPtr MatrixCreateFromAxisRadians(VectorPtr axis, CGFloat angle)
+{
 	VectorPtr noTranslate = VectorCreateFromComponents(0.f, 0.f, 0.f);
 	MatrixPtr matrix = MatrixCreateFromAxisRadiansTranslation(axis, angle, noTranslate);
-	Safe(VectorRelease,noTranslate);
+	Safe(VectorRelease, noTranslate);
 	return matrix;
 }
 
-MatrixPtr MatrixCreateFromAxisRadiansTranslation(VectorPtr axis, CGFloat angle, VectorPtr translate) {
+MatrixPtr MatrixCreateFromAxisRadiansTranslation(VectorPtr axis, CGFloat angle, VectorPtr translate)
+{
 	VectorPtr axisVector = VectorNormalize(axis);
 	CGFloat s = CGFloatSin(angle);
 	CGFloat c = CGFloatCos(angle);
-	CGFloat C = (1-c);
-	
+	CGFloat C = (1 - c);
+
 	CGFloat xx = VectorAxisTranslateXX(axisVector, s, c, C);
 	CGFloat xy = VectorAxisTranslateXY(axisVector, s, c, C);
 	CGFloat xz = VectorAxisTranslateXZ(axisVector, s, c, C);
 	VectorPtr xBasis = VectorCreateFromComponents(xx, xy, xz);
-	
+
 	CGFloat yx = VectorAxisTranslateYX(axisVector, s, c, C);
 	CGFloat yy = VectorAxisTranslateYY(axisVector, s, c, C);
 	CGFloat yz = VectorAxisTranslateYZ(axisVector, s, c, C);
 	VectorPtr yBasis = VectorCreateFromComponents(yx, yy, yz);
-	
+
 	CGFloat zx = VectorAxisTranslateZX(axisVector, s, c, C);
 	CGFloat zy = VectorAxisTranslateZY(axisVector, s, c, C);
 	CGFloat zz = VectorAxisTranslateZZ(axisVector, s, c, C);
 	VectorPtr zBasis = VectorCreateFromComponents(zx, zy, zz);
-		
+
 	VectorPtr origin = VectorCreateFromComponents(translate->x, translate->y, translate->z);
 	MatrixPtr matrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
-	
-	Safe(VectorRelease,axisVector);
-	Safe(VectorRelease,xBasis);
-	Safe(VectorRelease,yBasis);
-	Safe(VectorRelease,zBasis);
-	Safe(VectorRelease,origin);
+
+	Safe(VectorRelease, axisVector);
+	Safe(VectorRelease, xBasis);
+	Safe(VectorRelease, yBasis);
+	Safe(VectorRelease, zBasis);
+	Safe(VectorRelease, origin);
 	return matrix;
 }
 
-bool MatrixEqualsMatrix(MatrixPtr matrix, MatrixPtr equalsMatrix) {
+bool MatrixEqualsMatrix(MatrixPtr matrix, MatrixPtr equalsMatrix)
+{
 	return MatrixCompareEquals(matrix, equalsMatrix);
 }
 
-VectorPtr MatrixTransformPoint(MatrixPtr matrix, VectorPtr point) {
+VectorPtr MatrixTransformPoint(MatrixPtr matrix, VectorPtr point)
+{
 	VectorPtr xyz = MatrixTransformDirection(matrix, point);
 	VectorPtr xyzo = VectorAddVector(xyz, matrix->origin);
-	Safe(VectorRelease,xyz);
+	Safe(VectorRelease, xyz);
 	return xyzo;
 }
 
-VectorPtr MatrixTransformDirection(MatrixPtr matrix, VectorPtr dir) {
+VectorPtr MatrixTransformDirection(MatrixPtr matrix, VectorPtr dir)
+{
 	VectorPtr xBasis = VectorMultiplyVector(matrix->xBasis, dir->x);
 	VectorPtr yBasis = VectorMultiplyVector(matrix->yBasis, dir->y);
 	VectorPtr zBasis = VectorMultiplyVector(matrix->zBasis, dir->z);
-	
+
 	VectorPtr xy = VectorAddVector(xBasis, yBasis);
-	Safe(VectorRelease,xBasis);
-	Safe(VectorRelease,yBasis);
-	
+	Safe(VectorRelease, xBasis);
+	Safe(VectorRelease, yBasis);
+
 	VectorPtr xyz = VectorAddVector(xy, zBasis);
-	Safe(VectorRelease,zBasis);
-	Safe(VectorRelease,xy);
-	
+	Safe(VectorRelease, zBasis);
+	Safe(VectorRelease, xy);
+
 	return xyz;
 }
 
-MatrixPtr MatrixMultiplyMatrix(MatrixPtr matrix, MatrixPtr mulMatrix) {
+MatrixPtr MatrixMultiplyMatrix(MatrixPtr matrix, MatrixPtr mulMatrix)
+{
 	VectorPtr xBasis = MatrixTransformDirection(matrix, mulMatrix->xBasis);
 	VectorPtr yBasis = MatrixTransformDirection(matrix, mulMatrix->yBasis);
 	VectorPtr zBasis = MatrixTransformDirection(matrix, mulMatrix->zBasis);
 	VectorPtr origin = MatrixTransformPoint(matrix, mulMatrix->origin);
 	MatrixPtr resultMatrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
-	Safe(VectorRelease,xBasis);
-	Safe(VectorRelease,yBasis);
-	Safe(VectorRelease,zBasis);
-	Safe(VectorRelease,origin);
+	Safe(VectorRelease, xBasis);
+	Safe(VectorRelease, yBasis);
+	Safe(VectorRelease, zBasis);
+	Safe(VectorRelease, origin);
 	return resultMatrix;
 }
 
-MatrixPtr MatrixIdentity() {
-	VectorPtr xBasis = VectorCreateFromComponents(1.f,0.f,0.f);
-	VectorPtr yBasis = VectorCreateFromComponents(0.f,1.f,0.f);
-	VectorPtr zBasis = VectorCreateFromComponents(0.f,0.f,1.f);
-	VectorPtr origin = VectorCreateFromComponents(0.f,0.f,0.f);
+MatrixPtr MatrixIdentity()
+{
+	VectorPtr xBasis = VectorCreateFromComponents(1.f, 0.f, 0.f);
+	VectorPtr yBasis = VectorCreateFromComponents(0.f, 1.f, 0.f);
+	VectorPtr zBasis = VectorCreateFromComponents(0.f, 0.f, 1.f);
+	VectorPtr origin = VectorCreateFromComponents(0.f, 0.f, 0.f);
 	MatrixPtr matrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
-	Safe(VectorRelease,xBasis);
-	Safe(VectorRelease,yBasis);
-	Safe(VectorRelease,zBasis);
-	Safe(VectorRelease,origin);
+	Safe(VectorRelease, xBasis);
+	Safe(VectorRelease, yBasis);
+	Safe(VectorRelease, zBasis);
+	Safe(VectorRelease, origin);
 	return matrix;
 }
 
-MatrixPtr MatrixRigidInverse(MatrixPtr matrix) {
-	VectorPtr xBasis = VectorCreateFromComponents(matrix->xBasis->x,matrix->yBasis->x,matrix->zBasis->x);
-	VectorPtr yBasis = VectorCreateFromComponents(matrix->xBasis->y,matrix->yBasis->y,matrix->zBasis->y);
-	VectorPtr zBasis = VectorCreateFromComponents(matrix->xBasis->z,matrix->yBasis->z,matrix->zBasis->z);
+MatrixPtr MatrixRigidInverse(MatrixPtr matrix)
+{
+	VectorPtr xBasis = VectorCreateFromComponents(matrix->xBasis->x, matrix->yBasis->x, matrix->zBasis->x);
+	VectorPtr yBasis = VectorCreateFromComponents(matrix->xBasis->y, matrix->yBasis->y, matrix->zBasis->y);
+	VectorPtr zBasis = VectorCreateFromComponents(matrix->xBasis->z, matrix->yBasis->z, matrix->zBasis->z);
 	VectorPtr origin = MatrixTransformDirection(matrix, matrix->origin);
 	MatrixPtr inverseMatrix = MatrixCreateFromComponents(xBasis, yBasis, zBasis, origin);
-	Safe(VectorRelease,xBasis);
-	Safe(VectorRelease,yBasis);
-	Safe(VectorRelease,zBasis);
-	Safe(VectorRelease,origin);
+	Safe(VectorRelease, xBasis);
+	Safe(VectorRelease, yBasis);
+	Safe(VectorRelease, zBasis);
+	Safe(VectorRelease, origin);
 	return inverseMatrix;
 }
 
-void MatrixRelease(MatrixPtr matrix) {
-	Safe(VectorRelease,matrix->xBasis);
-	Safe(VectorRelease,matrix->yBasis);
-	Safe(VectorRelease,matrix->zBasis);
-	Safe(VectorRelease,matrix->origin);
-	Safe(free,matrix);
+void MatrixRelease(MatrixPtr matrix)
+{
+	Safe(VectorRelease, matrix->xBasis);
+	Safe(VectorRelease, matrix->yBasis);
+	Safe(VectorRelease, matrix->zBasis);
+	Safe(VectorRelease, matrix->origin);
+	Safe(free, matrix);
 }
 
 #endif

@@ -18,8 +18,9 @@ struct CoreInternalRange {
 
 typedef struct CoreInternalRange Range;
 
+// clang-format off
 #define RangeCreate(offset, length) (Range){offset, length}
 #define RangeContainsValue(range, value) (value >= range.offset && value < (range.offet + range.length))
-
+// clang-format on
 
 #endif

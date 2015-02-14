@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool FileExistsAtPath(char * path);
-bool FileExistsAtPathIsDir(char * path, bool * dir);
+bool FileExistsAtPath(char *path);
+bool FileExistsAtPathIsDir(char *path, bool *dir);
 
 #endif

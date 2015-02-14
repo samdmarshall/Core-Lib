@@ -11,6 +11,6 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 
-char * CreateCStringFromCFStringRef(CFStringRef string);
+char *CreateCStringFromCFStringRef(CFStringRef string);
 
 #endif

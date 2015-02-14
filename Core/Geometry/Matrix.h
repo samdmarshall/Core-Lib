@@ -19,7 +19,7 @@ struct Matrix {
 	VectorPtr origin;
 };
 
-typedef struct Matrix* MatrixPtr;
+typedef struct Matrix *MatrixPtr;
 
 MatrixPtr MatrixCreateFromComponents(VectorPtr xBasis, VectorPtr yBasis, VectorPtr zBasis, VectorPtr origin);
 MatrixPtr MatrixCreateFromMatrix(MatrixPtr matrix);

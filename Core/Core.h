@@ -63,7 +63,7 @@
 
 #pragma mark -
 #pragma mark CoreFoundation
-#ifdef __COREFOUNDATION_COREFOUNDATION__ 
+#ifdef __COREFOUNDATION_COREFOUNDATION__
 #include "CFDictionaryAddition.h"
 #include "CFTypeAddition.h"
 #include "CFDataAddition.h"

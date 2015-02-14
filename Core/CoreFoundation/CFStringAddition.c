@@ -11,7 +11,8 @@
 
 #include "CFStringAddition.h"
 
-char * CreateCStringFromCFStringRef(CFStringRef string) {
+char *CreateCStringFromCFStringRef(CFStringRef string)
+{
 	CFIndex alloclen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(string), kCFStringEncodingUTF8) + 1;
 	char *cstr = calloc(alloclen, sizeof(char));
 	CFStringGetCString(string, cstr, alloclen, kCFStringEncodingUTF8);
