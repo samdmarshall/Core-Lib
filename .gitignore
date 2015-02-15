@@ -1,31 +1,32 @@
+### git ###
+.gitignore*
+
+### OS X ###
 .DS_Store
 
-# Thumbnails
-._*
+### C ###
+*.o
 
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
+### Python ###
+*.pyc
+dist/
+*.egg-info
 
-# Vim
-.*.sw[a-z]
-*.un~
-Session.vim
-.netrwhist
-
-# Xcode
-*.mode1v3
-*.mode2v3
+### Xcode ###
 build/
 *.pbxuser
-*.perspective
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
 *.perspectivev3
+!default.perspectivev3
 xcuserdata
-*~.nib
-*.xcworkspacedata
-*.ipa
 *.xccheckout
+*.moved-aside
+DerivedData
+*.xcuserstate
 
-# Object files
-*.o
-*.so
+### Hopper ###
+*.hop
