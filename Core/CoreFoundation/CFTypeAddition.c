@@ -23,19 +23,19 @@ CF_RETURNS_RETAINED CFStringRef CFTypeStringRep(CFTypeRef value)
 	CFStringRef valueType = CFCopyTypeIDDescription(CFGetTypeID(value));
 
 	CFStringRef booleanType = CFCopyTypeIDDescription(CFBooleanGetTypeID());
-	if (CFStringCompare(valueType, booleanType, 0x0) == kCFCompareEqualTo) {
+	if (CFStringCompare(valueType, booleanType, 0) == kCFCompareEqualTo) {
 		string_rep = CFStringCreateCopy(kCFAllocatorDefault, CFBooleanGetValue(value) ? CFSTR("1") : CFSTR("0"));
 	}
 	CFSafeRelease(booleanType);
 
 	CFStringRef stringType = CFCopyTypeIDDescription(CFStringGetTypeID());
-	if (!string_rep && CFStringCompare(valueType, stringType, 0x0) == kCFCompareEqualTo) {
+	if (!string_rep && CFStringCompare(valueType, stringType, 0) == kCFCompareEqualTo) {
 		string_rep = CFStringCreateCopy(kCFAllocatorDefault, value);
 	}
 	CFSafeRelease(stringType);
 
 	CFStringRef numberType = CFCopyTypeIDDescription(CFNumberGetTypeID());
-	if (!string_rep && CFStringCompare(valueType, numberType, 0x0) == kCFCompareEqualTo) {
+	if (!string_rep && CFStringCompare(valueType, numberType, 0) == kCFCompareEqualTo) {
 		CFIndex numberType = CFNumberGetType(value);
 		switch (numberType) {
 			case kCFNumberSInt8Type: {
@@ -161,30 +161,30 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth)
 	bool foundType = false;
 	CFStringRef valueType = CFCopyTypeIDDescription(CFGetTypeID(value));
 	CFStringRef dictionaryType = CFCopyTypeIDDescription(CFDictionaryGetTypeID());
-	if (CFStringCompare(valueType, dictionaryType, 0x0) == kCFCompareEqualTo) {
+	if (CFStringCompare(valueType, dictionaryType, 0) == kCFCompareEqualTo) {
 		foundType = true;
 		printf("<CFDictionary>={\n");
-		PrintCFDictionaryInternalFormatting(value, depth + 0x1);
+		PrintCFDictionaryInternalFormatting(value, depth + 1);
 		PrintDepth(depth, "}\n");
 	}
 	CFSafeRelease(dictionaryType);
 
 	CFStringRef booleanType = CFCopyTypeIDDescription(CFBooleanGetTypeID());
-	if (CFStringCompare(valueType, booleanType, 0x0) == kCFCompareEqualTo) {
+	if (CFStringCompare(valueType, booleanType, 0) == kCFCompareEqualTo) {
 		foundType = true;
 		printf("<CFBoolean>={%s}\n", (CFBooleanGetValue(value) ? "True" : "False"));
 	}
 	CFSafeRelease(booleanType);
 
 	CFStringRef stringType = CFCopyTypeIDDescription(CFStringGetTypeID());
-	if (CFStringCompare(valueType, stringType, 0x0) == kCFCompareEqualTo) {
+	if (CFStringCompare(valueType, stringType, 0) == kCFCompareEqualTo) {
 		foundType = true;
 		printf("<CFStringRef>={%s}\n", (char *)CFStringGetCStringPtr(value, kCFStringEncodingUTF8));
 	}
 	CFSafeRelease(stringType);
 
 	CFStringRef numberType = CFCopyTypeIDDescription(CFNumberGetTypeID());
-	if (CFStringCompare(valueType, numberType, 0x0) == kCFCompareEqualTo) {
+	if (CFStringCompare(valueType, numberType, 0) == kCFCompareEqualTo) {
 		foundType = true;
 		printf("<CFNumberRef>=(");
 		CFIndex numberType = CFNumberGetType(value);
@@ -303,14 +303,14 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth)
 	CFSafeRelease(numberType);
 
 	CFStringRef arrayType = CFCopyTypeIDDescription(CFArrayGetTypeID());
-	if (CFStringCompare(valueType, arrayType, 0x0) == kCFCompareEqualTo) {
+	if (CFStringCompare(valueType, arrayType, 0) == kCFCompareEqualTo) {
 		foundType = true;
 		CFIndex count = CFArrayGetCount(value);
 		printf("<CFArray>=[\n");
-		for (CFIndex i = 0x0; i < count; i++) {
+		for (CFIndex i = 0; i < count; i++) {
 			CFTypeRef item = CFArrayGetValueAtIndex(value, i);
-			PrintDepth(depth + 0x1, "");
-			PrintCFTypeInternalFormat(item, depth + 0x1);
+			PrintDepth(depth + 1, "");
+			PrintCFTypeInternalFormat(item, depth + 1);
 		}
 		PrintDepth(depth, "]\n");
 	}
@@ -327,7 +327,7 @@ void PrintCFTypeInternalFormat(CFTypeRef value, uint32_t depth)
 
 void PrintCFType(CFTypeRef value)
 {
-	PrintCFTypeInternalFormat(value, 0x0);
+	PrintCFTypeInternalFormat(value, 0);
 }
 
 void CFSafeRelease(CFTypeRef CF_RELEASES_ARGUMENT var)
