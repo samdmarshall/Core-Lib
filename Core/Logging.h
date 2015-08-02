@@ -38,11 +38,11 @@
 #endif
 
 enum LoggerPrintCodes {
-	PrintCode_Norm = 0x0,
-	PrintCode_OK = 0x1,
-	PrintCode_TRY = 0x2,
-	PrintCode_ERR = 0x3,
-	PrintCode_NTR = 0x4,
+	PrintCode_Norm = 0,
+	PrintCode_OK = 1,
+	PrintCode_TRY = 2,
+	PrintCode_ERR = 3,
+	PrintCode_NTR = 4,
 	PrintCode_Count
 };
 
@@ -116,7 +116,7 @@ ATR_UNUSED static char *PrintCodeString[PrintCode_Count] = {
 #endif
 
 #define PrintDepth(depth, ...)                   \
-	for (unsigned int i = 0x0; i < depth; i++) { \
+	for (unsigned int i = 0; i < depth; i++) { \
 		printf("\t");                            \
 	}                                            \
 	printf(__VA_ARGS__);

@@ -27,7 +27,7 @@ static struct Vector VectorDefinedVectors[VectorAxisCount] = {
 
 VectorPtr VectorCreateFromComponents(CGFloat x, CGFloat y, CGFloat z)
 {
-	VectorPtr vector = (VectorPtr)calloc(0x1, sizeof(struct Vector));
+	VectorPtr vector = (VectorPtr)calloc(1, sizeof(struct Vector));
 	if (vector) {
 		vector->x = x;
 		vector->y = y;

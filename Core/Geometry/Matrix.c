@@ -15,7 +15,7 @@
 
 MatrixPtr MatrixCreateFromComponents(VectorPtr xBasis, VectorPtr yBasis, VectorPtr zBasis, VectorPtr origin)
 {
-	MatrixPtr matrix = (MatrixPtr)calloc(0x1, sizeof(struct Matrix));
+	MatrixPtr matrix = (MatrixPtr)calloc(1, sizeof(struct Matrix));
 	if (matrix) {
 		matrix->xBasis = VectorCreateFromVector(xBasis);
 		matrix->yBasis = VectorCreateFromVector(yBasis);

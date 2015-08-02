@@ -15,7 +15,7 @@
 #pragma mark -
 #pragma mark Integer
 
-#define GetDigitsOfNumber(num) (num > 0x0 ? (int)log10(num) + 0x1 : 0x1)
+#define GetDigitsOfNumber(num) (num > 0 ? (int)log10(num) + 1 : 1)
 
 #define MakeNSIntegerUnsigned(a) a = (a < 0 ? 0 : a)
 

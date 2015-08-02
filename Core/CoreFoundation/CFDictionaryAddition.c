@@ -22,7 +22,7 @@ void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t de
 	Pointer keys[keyCount];
 	Pointer values[keyCount];
 	CFDictionaryGetKeysAndValues(dictionary, PtrCast(keys, const void **), PtrCast(values, const void **));
-	for (uint32_t i = 0x0; i < keyCount; i++) {
+	for (uint32_t i = 0; i < keyCount; i++) {
 		CFStringRef key = PtrCast(keys[i], CFStringRef);
 		CFTypeRef value = PtrCast(values[i], CFTypeRef);
 		PrintDepth(depth, "%s: ", (char *)CFStringGetCStringPtr(key, kCFStringEncodingUTF8));
@@ -32,7 +32,7 @@ void PrintCFDictionaryInternalFormatting(CFDictionaryRef dictionary, uint32_t de
 
 void PrintCFDictionary(CFDictionaryRef dictionary)
 {
-	PrintCFDictionaryInternalFormatting(dictionary, 0x0);
+	PrintCFDictionaryInternalFormatting(dictionary, 0);
 }
 
 #endif

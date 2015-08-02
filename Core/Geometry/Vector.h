@@ -14,7 +14,7 @@
 #include <stdbool.h>
 
 enum VectorAxis {
-	VectorAxisZero = 0x0,
+	VectorAxisZero = 0,
 	VectorAxisX,
 	VectorAxisY,
 	VectorAxisZ,

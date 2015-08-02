@@ -19,9 +19,9 @@
 
 BufferRef CreateBufferRef()
 {
-	BufferRef buffer = calloc(0x1, sizeof(struct CoreInternalBuffer));
-	buffer->data = calloc(0x1, sizeof(char));
-	buffer->length = 0x1;
+	BufferRef buffer = calloc(1, sizeof(struct CoreInternalBuffer));
+	buffer->data = calloc(1, sizeof(char));
+	buffer->length = 1;
 	return buffer;
 }
 
@@ -30,14 +30,14 @@ uint64_t IncrementBufferRefBySize(BufferRef buffer, uint64_t size)
 	uint64_t oldSize = buffer->length;
 	buffer->length = oldSize + size;
 	buffer->data = realloc(buffer->data, (unsigned long)buffer->length);
-	memset(&(buffer->data[oldSize]), 0x0, size);
+	memset(&(buffer->data[oldSize]), 0, size);
 	return oldSize;
 }
 
 void AppendStringToBuffer(BufferRef buffer, char *append)
 {
 	BufferRef appendBuffer = CreateBufferRef();
-	IncrementBufferRefBySize(appendBuffer, strlen(append) - 0x1);
+	IncrementBufferRefBySize(appendBuffer, strlen(append) - 1);
 	memcpy(appendBuffer->data, append, strlen(append));
 	AppendBufferToBuffer(buffer, appendBuffer);
 	BufferRefRelease(appendBuffer);
@@ -52,14 +52,14 @@ void AppendBufferToBuffer(BufferRef buffer, BufferRef append)
 BufferRef CreateBufferFromBufferWithRange(BufferRef buffer, Range subRange)
 {
 	BufferRef sub = CreateBufferRef();
-	IncrementBufferRefBySize(sub, subRange.length - 0x1);
+	IncrementBufferRefBySize(sub, subRange.length - 1);
 	memcpy(sub->data, &(buffer->data[subRange.offset]), subRange.length);
 	return sub;
 }
 
 BufferRef CreateBufferFromFilePath(char *path)
 {
-	BufferRef fileBuffer = calloc(0x1, sizeof(struct CoreInternalBuffer));
+	BufferRef fileBuffer = calloc(1, sizeof(struct CoreInternalBuffer));
 	if (path) {
 		struct stat pathStat;
 		ssize_t result = lstat(path, &pathStat);
