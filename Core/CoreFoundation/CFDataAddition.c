@@ -2,8 +2,8 @@
 //  CFDataAddition.c
 //  Core
 //
-//  Created by Sam Marshall on 1/31/14.
-//  Copyright (c) 2014 Sam Marshall. All rights reserved.
+//  Created by Samantha Marshall on 1/31/14.
+//  Copyright (c) 2014 Samantha Marshall. All rights reserved.
 //
 
 #ifndef Core_CFDataAddition_c

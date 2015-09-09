@@ -2,7 +2,7 @@
 //  File.h
 //  Core
 //
-//  Created by Sam Marshall on 4/17/14.
+//  Created by Samantha Marshall on 4/17/14.
 //
 //
 

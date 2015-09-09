@@ -2,7 +2,7 @@
 //  Endian.h
 //  Core
 //
-//  Created by Sam Marshall on 4/5/14.
+//  Created by Samantha Marshall on 4/5/14.
 //
 //
 

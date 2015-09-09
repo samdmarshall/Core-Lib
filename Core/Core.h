@@ -2,8 +2,8 @@
 //  Core.h
 //  Core
 //
-//  Created by Sam Marshall on 12/8/13.
-//  Copyright (c) 2013 Sam Marshall. All rights reserved.
+//  Created by Samantha Marshall on 12/8/13.
+//  Copyright (c) 2013 Samantha Marshall. All rights reserved.
 //
 
 #ifndef Core_Core_h
